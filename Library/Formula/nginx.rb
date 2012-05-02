@@ -47,6 +47,9 @@ class Nginx < Formula
     args << passenger_config_args if ARGV.include? '--with-passenger'
     args << "--with-http_dav_module" if ARGV.include? '--with-webdav'
 
+    extra_modules = ARGV.grep(/^--add-module=/)
+    args.concat(extra_modules) if extra_modules
+
     system "./configure", *args
     system "make"
     system "make install"
